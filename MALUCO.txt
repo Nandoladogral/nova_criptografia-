@@ -1,1 +1,28 @@
-oi
+-- Crie um botão no jogo
+local button = Instance.new("TextButton")
+button.Parent = game.Workspace
+button.Text = "Abrir Pop-up"
+button.Position = UDim2.new(0.5, 0, 0.5, 0)
+button.Size = UDim2.new(0, 100, 0, 50)
+
+-- Função para abrir o pop-up
+local function abrirPopup()
+    -- Código para abrir o pop-up aqui
+    print("Pop-up aberto!")
+end
+
+-- Conecte o evento de clique do botão à função
+button.MouseButton1Click:Connect(abrirPopup)
+
+-- Defina as cores das equipes
+local equipeInimiga = BrickColor.new("Bright red")
+local suaEquipe = BrickColor.new("Bright green")
+
+-- Atribua as cores aos jogadores
+local jogador = game.Players.LocalPlayer
+jogador.TeamColor = suaEquipe
+-- Código para atribuir a cor da equipe inimiga aos jogadores inimigos
+-- ...
+
+-- Desenhe a caixa ao redor dos jogadores
+-- ...
