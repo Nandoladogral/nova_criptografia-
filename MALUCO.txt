@@ -1,4 +1,4 @@
-local library = loadstring(game:HttpGet(("")))()
+local library = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Nandoladogral/Nandoladogral/main/MALUCO.txt")))()
 
 local w = library:CreateWindow("GOD HUB")
 
