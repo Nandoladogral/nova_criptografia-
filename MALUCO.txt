@@ -1,57 +1,54 @@
-local library = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Nandoladogral/Nandoladogral/main/MALUCO.txt")))()
+--script ui aqui
+local Lib = loadstring(game:Httpõet(""))()
 
-local w = library:CreateWindow("GOD HUB")
+local UI = Lib:Create{
+Theme = "Dark", -- or any other these
+Size - UD1m2.new(0, 555, 0, 400) -- default
+}
+local Main - UI:Tab{
+  Nane = "Inicio"
+}
+local Divider = Main:Divider{
+Name = "Inicio shit"
+}
+local QuitDivider = Rain: Divider{
+Nane - "Sair"
+}
+-- Exemplo de script de ESP para dispositivos móveis em Lua
+-- Ative e desative o ESP com um botão
 
-local b = w:CreateFolder("MENU")
+local ESPEnabled = false -- Variável para controlar o estado do ESP
 
-local player = game:GetService("Players").LocalPlayer
-local mouse = player:GetMouse()
-
--- FOV
-
-local player = game.Players.LocalPlayer
-local teamColor = player.TeamColor
-local espEnabled = false
-
-local function isEnemy(player)
-    return player.TeamColor ~= teamColor
+-- Função para desenhar o ESP
+local function DrawESP(player, color)
+    -- Implemente o desenho do ESP aqui (por exemplo, caixa e nome)
+    -- Use a cor fornecida (vermelho para inimigos, verde para sua equipe)
 end
 
-local function createESP(player)
-    local esp = Instance.new("esp")
-    esp.Name = "ESP"
-    esp.Text = player.Name
-    esp.Size = UDim2.new(0, 100, 0, 20)
-    esp.Position = UDim2.new(0, 0, 0, 0)
-    esp.BackgroundTransparency = 0.5
-    esp.BackgroundColor3 = isEnemy(player) and Color3.new(1, 0, 0) or Color3.new(0, 0, 1)
-    esp.Parent = game.CoreGui
-end
+-- Botão para ativar/desativar o ESP
+local button = Instance.new("esp")
+button.Text = "Ativar ESP"
+button.Parent = game:GetService("Players").LocalPlayer.PlayerGui
+button.Position = UDim2.new(0, 10, 0, 10)
+button.Size = UDim2.new(0, 100, 0, 30)
+button.BackgroundColor3 = Color3.new(0, 0, 0)
+button.TextColor3 = Color3.new(1, 1, 1)
 
-local function updateESP()
-    for _, player in pairs(game.Players:GetPlayers()) do
-        if player ~= player and player.Character then
-            local esp = player.Character:FindFirstChild("ESP")
-            if esp then
-                esp.Visible = isEnemy(player) and espEnabled
-            else
-                createESP(player)
+button.MouseButton1Click:Connect(function()
+    ESPEnabled = not ESPEnabled
+    button.Text = ESPEnabled and "Desativar ESP" or "Ativar ESP"
+end)
+
+-- Loop para atualizar o ESP
+while true do
+    for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+        if player ~= game:GetService("Players").LocalPlayer then
+            local teamColor = player.TeamColor
+            local espColor = teamColor == game:GetService("Players").LocalPlayer.TeamColor and Color3.new(0, 255, 0) or Color3.new(255, 0, 0)
+            if ESPEnabled then
+                DrawESP(player, espColor)
             end
         end
     end
+    wait(1) -- Atualize a cada segundo (ajuste conforme necessário)
 end
-
-local function toggleESP()
-    espEnabled = not espEnabled
-    updateESP()
-end
-
--- Ativar/desativar o ESP com um botão
-local button = Instance.new("ESP")
-button.Name = "ESP"
-button.Text = "Ativar ESP"
-button.Size = UDim2.new(0, 100, 0, 30)
-button.Position = UDim2.new(0, 10, 0, 10)
-button.Parent = game.CoreGui
-
-button.MouseButton1Click:Connect(ESP)
