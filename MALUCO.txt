@@ -1,28 +1,57 @@
--- Crie um botão no jogo
-local button = Instance.new("TextButton")
-button.Parent = game.Workspace
-button.Text = "Abrir Pop-up"
-button.Position = UDim2.new(0.5, 0, 0.5, 0)
-button.Size = UDim2.new(0, 100, 0, 50)
+local library = loadstring(game:HttpGet(("")))()
 
--- Função para abrir o pop-up
-local function abrirPopup()
-    -- Código para abrir o pop-up aqui
-    print("Pop-up aberto!")
+local w = library:CreateWindow("GOD HUB")
+
+local b = w:CreateFolder("MENU")
+
+local player = game:GetService("Players").LocalPlayer
+local mouse = player:GetMouse()
+
+-- FOV
+
+local player = game.Players.LocalPlayer
+local teamColor = player.TeamColor
+local espEnabled = false
+
+local function isEnemy(player)
+    return player.TeamColor ~= teamColor
 end
 
--- Conecte o evento de clique do botão à função
-button.MouseButton1Click:Connect(abrirPopup)
+local function createESP(player)
+    local esp = Instance.new("TextLabel")
+    esp.Name = "ESP"
+    esp.Text = player.Name
+    esp.Size = UDim2.new(0, 100, 0, 20)
+    esp.Position = UDim2.new(0, 0, 0, 0)
+    esp.BackgroundTransparency = 0.5
+    esp.BackgroundColor3 = isEnemy(player) and Color3.new(1, 0, 0) or Color3.new(0, 0, 1)
+    esp.Parent = game.CoreGui
+end
 
--- Defina as cores das equipes
-local equipeInimiga = BrickColor.new("Bright red")
-local suaEquipe = BrickColor.new("Bright green")
+local function updateESP()
+    for _, player in pairs(game.Players:GetPlayers()) do
+        if player ~= player and player.Character then
+            local esp = player.Character:FindFirstChild("ESP")
+            if esp then
+                esp.Visible = isEnemy(player) and espEnabled
+            else
+                createESP(player)
+            end
+        end
+    end
+end
 
--- Atribua as cores aos jogadores
-local jogador = game.Players.LocalPlayer
-jogador.TeamColor = suaEquipe
--- Código para atribuir a cor da equipe inimiga aos jogadores inimigos
--- ...
+local function toggleESP()
+    espEnabled = not espEnabled
+    updateESP()
+end
 
--- Desenhe a caixa ao redor dos jogadores
--- ...
+-- Ativar/desativar o ESP com um botão
+local button = Instance.new("TextButton")
+button.Name = "ToggleESPButton"
+button.Text = "Ativar ESP"
+button.Size = UDim2.new(0, 100, 0, 30)
+button.Position = UDim2.new(0, 10, 0, 10)
+button.Parent = game.CoreGui
+
+button.MouseButton1Click:Connect(toggleESP)
