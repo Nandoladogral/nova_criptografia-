@@ -1,5 +1,5 @@
 --script ui aqui
-local Lib = loadstring(game:Httpõet(""))()
+local Lib = loadstring(game:Httpõet("https://raw.githubusercontent.com/Nandoladogral/Nandoladogral/main/MALUCO.txt"))()
 
 local UI = Lib:Create{
 Theme = "Dark", -- or any other these
