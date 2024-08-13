@@ -18,7 +18,7 @@ local function isEnemy(player)
 end
 
 local function createESP(player)
-    local esp = Instance.new("TextLabel")
+    local esp = Instance.new("esp")
     esp.Name = "ESP"
     esp.Text = player.Name
     esp.Size = UDim2.new(0, 100, 0, 20)
@@ -47,11 +47,11 @@ local function toggleESP()
 end
 
 -- Ativar/desativar o ESP com um botão
-local button = Instance.new("TextButton")
-button.Name = "ToggleESPButton"
+local button = Instance.new("ESP")
+button.Name = "ESP"
 button.Text = "Ativar ESP"
 button.Size = UDim2.new(0, 100, 0, 30)
 button.Position = UDim2.new(0, 10, 0, 10)
 button.Parent = game.CoreGui
 
-button.MouseButton1Click:Connect(toggleESP)
+button.MouseButton1Click:Connect(ESP)
