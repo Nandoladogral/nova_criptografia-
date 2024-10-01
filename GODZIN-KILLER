@@ -1,4 +1,4 @@
-local UserInputService = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nandoladogral/Nandoladogral/refs/heads/main/GODZIN-KILLER.lua"))()
+local UserInputService = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nandoladogral/Nandoladogral/refs/heads/main/GODZIN-KILLER.txt"))()
 
 -- Criação da ScreenGui
 local ScreenGui = Instance.new("ScreenGui")
