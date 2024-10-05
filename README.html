@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ensina - Script Godzin Speed Bypass</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .script-box {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Ensina - Script Godzin Speed Bypass</h1>
+        <p>Clique no botão abaixo para copiar o script:</p>
+        
+        <div class="script-box" id="scriptText">
+            loadstring(game:HttpGet("https://pastebin.com/raw/HY57edCT"))();
+        </div>
+
+        <button onclick="copyScript()">Copiar Script</button>
+    </div>
+
+    <script>
+        function copyScript() {
+            // Seleciona o texto do script
+            var scriptText = document.getElementById("scriptText").innerText;
+
+            // Cria um elemento de texto temporário
+            var tempInput = document.createElement("textarea");
+            tempInput.value = scriptText;
+            document.body.appendChild(tempInput);
+
+            // Seleciona o texto e copia para a área de transferência
+            tempInput.select();
+            document.execCommand("copy");
+
+            // Remove o elemento de texto temporário
+            document.body.removeChild(tempInput);
+
+            // Alerta de sucesso
+            alert("Script copiado com sucesso!");
+        }
+    </script>
+
+</body>
+</html>
