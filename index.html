@@ -3,99 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ensina - 🤡IPHONE OFF 🤡؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁؀؁؀؁؀؁؀؀؁؀؁؀؁</title>
+    <title>SITE DE CONTAS</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f3f4f6;
             color: #333;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
         }
-
         .container {
-            max-width: 600px;
-            margin: 0 auto;
             background-color: #fff;
+            border-radius: 10px;
             padding: 20px;
+            max-width: 600px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
             text-align: center;
         }
-
         h1 {
+            color: #2d3748;
+        }
+        .price {
+            color: #e53e3e;
             font-size: 24px;
-            margin-bottom: 10px;
-            color: #007bff;
+            font-weight: bold;
+            margin: 10px 0;
         }
-
-        p {
-            font-size: 16px;
-            margin-bottom: 20px;
+        .description {
+            text-align: left;
+            margin: 20px 0;
+            line-height: 1.6;
         }
-
-        .script-box {
-            background-color: #f0f0f0;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-family: monospace;
-            color: #333;
-            margin-bottom: 20px;
+        .description p {
+            margin: 8px 0;
         }
-
-        button {
-            background-color: #007bff;
-            color: white;
+        .support-link {
+            display: inline-block;
+            margin-top: 20px;
             padding: 10px 20px;
-            border: none;
+            background-color: #3182ce;
+            color: #fff;
             border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-bottom: 10px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
         }
-
-        button:hover {
-            background-color: #0056b3;
+        .support-link:hover {
+            background-color: #2b6cb0;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Ensina - Script Godzin Speed Bypass</h1>
-        <p>Clique no botão abaixo para copiar o script:</p>
-        
-        <div class="script-box" id="scriptText">
-            loadstring(game:HttpGet("https://pastebin.com/raw/HY57edCT"))();
-        </div>
-
-        <button onclick="copyScript()">Copiar Script</button>
-        <br>
-        <button onclick="window.open('https://youtube.com/@scrpeteer?si=FFaOcs7hAnPWRNNJ', '_blank')">Canal que criou o script</button>
+<div class="container">
+    <h1>Contas Mais Vendidas</h1>
+    <h2>Conta Aleatória</h2>
+    <p class="price">R$ 25,00</p>
+    
+    <div class="description">
+        <p>40% - Conta sem nada, mas com fruta.</p>
+        <p>30% - Conta Sea 3 com frutas míticas garantidas.</p>
+        <p>10% - Conta com God Humano, Cdk, e Soul Guitar.</p>
+        <p>Conta completa com TTK, Cdk, Soul Guitar e God Humano.</p>
     </div>
-
-    <script>
-        function copyScript() {
-            // Seleciona o texto do script
-            var scriptText = document.getElementById("scriptText").innerText;
-
-            // Cria um elemento de texto temporário
-            var tempInput = document.createElement("textarea");
-            tempInput.value = scriptText;
-            document.body.appendChild(tempInput);
-
-            // Seleciona o texto e copia para a área de transferência
-            tempInput.select();
-            document.execCommand("copy");
-
-            // Remove o elemento de texto temporário
-            document.body.removeChild(tempInput);
-
-            // Alerta de sucesso
-            alert("Script copiado com sucesso!");
-        }
-    </script>
+    
+    <a href="https://wa.me/+556993140095" class="support-link">Suporte</a>
+</div>
 
 </body>
 </html>
