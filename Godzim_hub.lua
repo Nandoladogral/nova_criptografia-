@@ -1,3 +1,4 @@
+
 -- Criando a ScreenGui
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "GODZIM_MENU"
@@ -100,6 +101,28 @@ AimbotButtonCorner.Parent = AimbotButton
 -- Adicionando funcionalidade ao botão "Aimbot"
 AimbotButton.MouseButton1Click:Connect(function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/refs/heads/main/Arceus%20Aimbot.lua'))()
+end)
+
+-- Criando o botão "Script Infinity"
+local InfinityButton = Instance.new("TextButton")
+InfinityButton.Name = "InfinityButton"
+InfinityButton.Size = UDim2.new(0.9, 0, 0, 50)
+InfinityButton.Position = UDim2.new(0.05, 0, 0.8, 0) -- Posição ajustada para maior separação
+InfinityButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+InfinityButton.Text = "Script Infinity"
+InfinityButton.TextScaled = true
+InfinityButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+InfinityButton.Font = Enum.Font.Gotham
+InfinityButton.Parent = MainFrame
+
+-- Tornando o botão "Script Infinity" arredondado
+local InfinityButtonCorner = Instance.new("UICorner")
+InfinityButtonCorner.CornerRadius = UDim.new(0.1, 0)
+InfinityButtonCorner.Parent = InfinityButton
+
+-- Adicionando funcionalidade ao botão "Script Infinity"
+InfinityButton.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()  -- Substitua com o link correto
 end)
 
 -- Criando o botão de minimizar
