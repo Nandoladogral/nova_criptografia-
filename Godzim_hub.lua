@@ -7,8 +7,8 @@ ScreenGui.ResetOnSpawn = false
 -- Criando o Frame Principal
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0.6, 0, 0.8, 0) -- Aumentado verticalmente
-MainFrame.Position = UDim2.new(0.2, 0, 0.1, 0)
+MainFrame.Size = UDim2.new(0.6, 0, 1, 0) -- Aumentado o tamanho para 100% da altura da tela
+MainFrame.Position = UDim2.new(0.2, 0, 0.05, 0) -- Ajustado para que fique bem posicionado
 MainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 MainFrame.BorderSizePixel = 0
 MainFrame.Visible = true
@@ -40,7 +40,7 @@ TitleCorner.Parent = Title
 local FlingButton = Instance.new("TextButton")
 FlingButton.Name = "FlingButton"
 FlingButton.Size = UDim2.new(0.9, 0, 0, 50)
-FlingButton.Position = UDim2.new(0.05, 0, 0.25, 0)
+FlingButton.Position = UDim2.new(0.05, 0, 0.2, 0) -- Distância muito aumentada
 FlingButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 FlingButton.Text = "Fling Player"
 FlingButton.TextScaled = true
@@ -62,7 +62,7 @@ end)
 local PuxeButton = Instance.new("TextButton")
 PuxeButton.Name = "PuxeButton"
 PuxeButton.Size = UDim2.new(0.9, 0, 0, 50)
-PuxeButton.Position = UDim2.new(0.05, 0, 0.6, 0) -- Mais abaixo do botão "Fling Player"
+PuxeButton.Position = UDim2.new(0.05, 0, 0.4, 0) -- Distância muito aumentada
 PuxeButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 PuxeButton.Text = "Puxe Player"
 PuxeButton.TextScaled = true
@@ -78,6 +78,28 @@ PuxeButtonCorner.Parent = PuxeButton
 -- Adicionando funcionalidade ao botão "Puxe Player"
 PuxeButton.MouseButton1Click:Connect(function()
     loadstring(game:HttpGet('https://pastebin.com/raw/7XSc7Vcm'))()
+end)
+
+-- Criando o botão "Aimbot"
+local AimbotButton = Instance.new("TextButton")
+AimbotButton.Name = "AimbotButton"
+AimbotButton.Size = UDim2.new(0.9, 0, 0, 50)
+AimbotButton.Position = UDim2.new(0.05, 0, 0.6, 0) -- Distância muito aumentada
+AimbotButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+AimbotButton.Text = "Aimbot"
+AimbotButton.TextScaled = true
+AimbotButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+AimbotButton.Font = Enum.Font.Gotham
+AimbotButton.Parent = MainFrame
+
+-- Tornando o botão "Aimbot" arredondado
+local AimbotButtonCorner = Instance.new("UICorner")
+AimbotButtonCorner.CornerRadius = UDim.new(0.1, 0)
+AimbotButtonCorner.Parent = AimbotButton
+
+-- Adicionando funcionalidade ao botão "Aimbot"
+AimbotButton.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/refs/heads/main/Arceus%20Aimbot.lua'))()
 end)
 
 -- Criando o botão de minimizar
