@@ -1,4 +1,4 @@
--- Criando a ScreenGu
+-- Criando a ScreenGui
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "GODZIM_MENU"
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -7,8 +7,8 @@ ScreenGui.ResetOnSpawn = false
 -- Criando o Frame Principal
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0.6, 0, 0.6, 0)
-MainFrame.Position = UDim2.new(0.2, 0, 0.2, 0)
+MainFrame.Size = UDim2.new(0.6, 0, 0.8, 0) -- Aumentado verticalmente
+MainFrame.Position = UDim2.new(0.2, 0, 0.1, 0)
 MainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 MainFrame.BorderSizePixel = 0
 MainFrame.Visible = true
@@ -40,7 +40,7 @@ TitleCorner.Parent = Title
 local FlingButton = Instance.new("TextButton")
 FlingButton.Name = "FlingButton"
 FlingButton.Size = UDim2.new(0.9, 0, 0, 50)
-FlingButton.Position = UDim2.new(0.05, 0, 0.35, 0)
+FlingButton.Position = UDim2.new(0.05, 0, 0.25, 0)
 FlingButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 FlingButton.Text = "Fling Player"
 FlingButton.TextScaled = true
@@ -56,6 +56,28 @@ FlingButtonCorner.Parent = FlingButton
 -- Adicionando funcionalidade ao botão "Fling Player"
 FlingButton.MouseButton1Click:Connect(function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Auto%20Fling%20Player'))()
+end)
+
+-- Criando o botão "Puxe Player"
+local PuxeButton = Instance.new("TextButton")
+PuxeButton.Name = "PuxeButton"
+PuxeButton.Size = UDim2.new(0.9, 0, 0, 50)
+PuxeButton.Position = UDim2.new(0.05, 0, 0.6, 0) -- Mais abaixo do botão "Fling Player"
+PuxeButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+PuxeButton.Text = "Puxe Player"
+PuxeButton.TextScaled = true
+PuxeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+PuxeButton.Font = Enum.Font.Gotham
+PuxeButton.Parent = MainFrame
+
+-- Tornando o botão "Puxe Player" arredondado
+local PuxeButtonCorner = Instance.new("UICorner")
+PuxeButtonCorner.CornerRadius = UDim.new(0.1, 0)
+PuxeButtonCorner.Parent = PuxeButton
+
+-- Adicionando funcionalidade ao botão "Puxe Player"
+PuxeButton.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet('https://pastebin.com/raw/7XSc7Vcm'))()
 end)
 
 -- Criando o botão de minimizar
@@ -143,41 +165,3 @@ UIS.InputChanged:Connect(function(input)
         update(input)
     end
 end)
-
--- Tornando o botão de maximizar móvel de forma independente
-local function makeButtonMovable(button)
-    local dragging, dragStart, startPos
-    button.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = true
-            dragStart = input.Position
-            startPos = button.Position
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
-        end
-    end)
-
-    button.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-            dragInput = input
-        end
-    end)
-
-    UIS.InputChanged:Connect(function(input)
-        if input == dragInput and dragging then
-            local delta = input.Position - dragStart
-            button.Position = UDim2.new(
-                startPos.X.Scale,
-                startPos.X.Offset + delta.X,
-                startPos.Y.Scale,
-                startPos.Y.Offset + delta.Y
-            )
-        end
-    end)
-end
-
--- Tornando o botão de maximizar móvel
-makeButtonMovable(MaximizeButton)
