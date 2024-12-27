@@ -1,4 +1,4 @@
--- Criando a ScreenGui
+-- Criando a ScreenGu
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "GODZIM_MENU"
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
