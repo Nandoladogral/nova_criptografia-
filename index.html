@@ -3,53 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <title>Tela Travada</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body {
       margin: 0;
       padding: 0;
       overflow: hidden;
+      background: black;
+      color: white;
+      font-family: sans-serif;
+      height: 100%;
+      user-select: none;
+      touch-action: none;
+      cursor: none; /* ESCONDE O CURSOR */
     }
 
     .overlay {
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.9);
-      color: white;
-      font-size: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
+      background-color: rgba(0, 0, 0, 0.95);
       z-index: 9999;
+      font-size: 24px;
+      text-align: center;
     }
 
-    body * {
-      pointer-events: none; /* impede clique */
+    * {
+      pointer-events: none; /* BLOQUEIA CLIQUES */
     }
   </style>
 </head>
 <body>
 
-<div class="overlay">🖕😈🖕 fdp desliga o pc agora 
+<div class="overlay">
+  Dispositivo bloqueado. Recarregamento e mouse desativados.
 </div>
 
 <script>
-  // Mostra alerta de confirmação ao tentar sair
-  window.onbeforeunload = function () {
-    return "Tem certeza que deseja sair?";
-  };
+  // Bloqueia saída
+  window.onbeforeunload = () => "Tem certeza que deseja sair?";
 
-  // Tenta bloquear teclas de devtools e ESC
-  document.addEventListener("keydown", function(e) {
+  // Bloqueia teclas comuns
+  document.addEventListener("keydown", (e) => {
+    const blockedKeys = ["F5", "F12", "Escape", "r", "u"];
     if (
-      e.key === "F12" ||
-      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) ||
-      (e.ctrlKey && e.key === "U") ||
-      e.key === "Escape"
+      blockedKeys.includes(e.key.toLowerCase()) ||
+      (e.ctrlKey && ["r", "u"].includes(e.key.toLowerCase())) ||
+      (e.ctrlKey && e.shiftKey)
     ) {
       e.preventDefault();
+      e.stopPropagation();
     }
   });
+
+  // Tenta impedir o usuário de trocar de aba
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState !== "visible") {
+      alert("Você não pode sair dessa aba.");
+    }
+  });
+
+  // Bloqueia rolagem e gestos
+  document.body.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+  document.body.addEventListener('wheel', e => e.preventDefault(), { passive: false });
+
+  // Opcional: Previne qualquer movimento do mouse
+  document.addEventListener("mousemove", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, { passive: false });
 </script>
 
 </body>
