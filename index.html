@@ -2,79 +2,97 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Tela Travada</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site com Login e Painel de Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: black;
-      color: white;
-      font-family: sans-serif;
-      height: 100%;
-      user-select: none;
-      touch-action: none;
-      cursor: none; /* ESCONDE O CURSOR */
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(0, 0, 0, 0.95);
-      z-index: 9999;
-      font-size: 24px;
-      text-align: center;
-    }
-
-    * {
-      pointer-events: none; /* BLOQUEIA CLIQUES */
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #0e0120, #1d0040); color: white; height: 100vh; display: flex; justify-content: center; align-items: center; }
+    .container { background: rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 40px; text-align: center; width: 100%; max-width: 400px; box-shadow: 0 0 15px #8000ff; }
+    h2 { margin-bottom: 20px; background: linear-gradient(to right, #ff00ff, #8000ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    input { width: 100%; padding: 12px; margin: 10px 0; border: none; border-radius: 10px; font-size: 16px; }
+    button { width: 100%; padding: 12px; margin-top: 10px; background: linear-gradient(135deg, #00f2ff, #00ffc8); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+    button:hover { transform: scale(1.05); box-shadow: 0 0 15px #00fff2; }
+    .switch { font-size: 14px; color: #ccc; margin-top: 10px; }
+    .switch a { color: #00e0ff; cursor: pointer; }
+    #adminPanel { display: none; flex-direction: column; align-items: center; margin-top: 20px; }
+    textarea { width: 100%; height: 150px; border-radius: 10px; padding: 10px; background: #0d0d20; color: #fff; border: 1px solid #666; resize: none; }
   </style>
 </head>
 <body>
 
-<div class="overlay">
-  Dispositivo bloqueado. Recarregamento e mouse desativados.
+<div class="container" id="authContainer">
+  <h2 id="formTitle">Login</h2>
+  <input type="text" id="username" placeholder="Usuário" />
+  <input type="password" id="password" placeholder="Senha" />
+  <button onclick="handleAuth()">Entrar</button>
+  <div class="switch" id="switchMode">
+    Não tem conta? <a onclick="toggleForm()">Cadastrar</a>
+  </div>
+
+  <div id="adminPanel">
+    <h3>Painel de Admin</h3>
+    <p>Total de contas cadastradas: <span id="contaTotal">0</span></p>
+    <textarea id="dados" readonly></textarea>
+    <button onclick="logoutAdmin()">Sair do Painel</button>
+  </div>
 </div>
 
+<script src="accounts.js"></script>
 <script>
-  // Bloqueia saída
-  window.onbeforeunload = () => "Tem certeza que deseja sair?";
+  let isLogin = true;
 
-  // Bloqueia teclas comuns
-  document.addEventListener("keydown", (e) => {
-    const blockedKeys = ["F5", "F12", "Escape", "r", "u"];
-    if (
-      blockedKeys.includes(e.key.toLowerCase()) ||
-      (e.ctrlKey && ["r", "u"].includes(e.key.toLowerCase())) ||
-      (e.ctrlKey && e.shiftKey)
-    ) {
-      e.preventDefault();
-      e.stopPropagation();
+  // Alterna entre o formulário de login e cadastro
+  function toggleForm() {
+    isLogin = !isLogin;
+    document.getElementById("formTitle").innerText = isLogin ? "Login" : "Cadastro";
+    document.querySelector("button").innerText = isLogin ? "Entrar" : "Cadastrar";
+    document.getElementById("switchMode").innerHTML = isLogin
+      ? 'Não tem conta? <a onclick="toggleForm()">Cadastrar</a>'
+      : 'Já tem conta? <a onclick="toggleForm()">Entrar</a>';
+  }
+
+  // Lida com login ou cadastro
+  function handleAuth() {
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value.trim();
+
+    if (!user || !pass) return alert("Preencha todos os campos!");
+
+    if (isLogin) {
+      if (user === "admin" && pass === "admin123") {
+        showAdminPanel();
+      } else if (users[user] && users[user] === pass) {
+        alert("Login bem-sucedido!");
+      } else {
+        alert("Usuário ou senha incorretos.");
+      }
+    } else {
+      if (users[user]) return alert("Esse usuário já existe!");
+      users[user] = pass;
+      saveUsers();
+      alert("Conta criada com sucesso!");
+      toggleForm();
     }
-  });
+  }
 
-  // Tenta impedir o usuário de trocar de aba
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState !== "visible") {
-      alert("Você não pode sair dessa aba.");
-    }
-  });
+  // Mostra o painel de admin com os dados de todas as contas cadastradas
+  function showAdminPanel() {
+    document.getElementById("adminPanel").style.display = "flex";
+    document.getElementById("authContainer").style.display = "none";
+    document.getElementById("contaTotal").innerText = Object.keys(users).length;
 
-  // Bloqueia rolagem e gestos
-  document.body.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
-  document.body.addEventListener('wheel', e => e.preventDefault(), { passive: false });
+    const userEntries = Object.entries(users).map(([user, pass]) => `Usuário: ${user} | Senha: ${pass}`).join("\n");
+    document.getElementById("dados").value = userEntries;
+  }
 
-  // Opcional: Previne qualquer movimento do mouse
-  document.addEventListener("mousemove", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  }, { passive: false });
+  // Sair do painel de admin e voltar para a tela de login
+  function logoutAdmin() {
+    document.getElementById("adminPanel").style.display = "none";
+    document.getElementById("authContainer").style.display = "block";
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+  }
 </script>
 
 </body>
