@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Criptografia Secreta</title>
+  <title>Criptografia gdnull</title>
   <style>
     body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
     textarea { width: 100%; height: 100px; margin-top: 10px; }
@@ -11,8 +11,8 @@
   </style>
 </head>
 <body>
-  <h2>Criptografia Personalizada</h2>
-<label>Mensagem:</label>
+  <h2>Criptografia gbnull</h2>
+  <label>Mensagem:</label>
 
   <textarea id="mensagem"></textarea>  <div>
     <button onclick="criptografar()">Criptografar</button>
@@ -25,7 +25,7 @@
   <script>
     const letras = {
       'a': '@#', 'b': '$>', 'c': '$%', 'd': '<_', 'e': '!%', 'f': '*;',
-      'g': '%$', 'h': "^'", 'i': '#@', 'j': '&?', 'k': '?¿', 'l': '^_',
+      'g': '%$', 'h': "^'", 'i': '#@', 'j': '&?', 'k': '?¿', 'l': '',
       'm': '%(', 'n': '@]', 'o': '/_', 'p': '×+', 'q': '=>', 'r': '#(', 's': '(*',
       't': '.,', 'u': '÷"', 'v': '][', 'w': ')(', 'x': '](', 'y': ']]', 'z': ':;'
     };
@@ -36,9 +36,9 @@
     };
 
     const simbolos = {
-      '!': '1268', '@': '941', '#': '948', '$': '9148', '%': '9141',
+      '!': '1298', '@': '941', '#': '948', '$': '9148', '%': '9141',
       '^': '9451', '&': '0862', '*': '8139', '(': '6431', ')': '1642',
-      '-': '0914', "'": '9147', '"': '0164', ':': '1964', ';': '0164',
+      '-': '0914', "'": '9147', '"': '7164', ':': '1964', ';': '9164',
       ',': '0182', '?': '0174', '+': '0815', '×': '0941', '÷': '0983',
       '=': '0127', '/': '1627', '_': '1911', '<': '1943', '>': '9144',
       '[': '0136', ']': '9781', '~': '9881', '`': '9814', '{': '1147',
@@ -49,22 +49,18 @@
     const inversoNumeros = Object.fromEntries(Object.entries(numeros).map(([k, v]) => [v, k]));
     const inversoSimbolos = Object.fromEntries(Object.entries(simbolos).map(([k, v]) => [v, k]));
 
+    function isEmoji(char) {
+      return /\p{Extended_Pictographic}/u.test(char);
+    }
+
     function criptografar() {
       const input = document.getElementById('mensagem').value;
       let output = '';
-      let inQuotes = false;
-      let buffer = '';
 
       for (let i = 0; i < input.length; i++) {
         const char = input[i];
 
-        if (char === '"') {
-          inQuotes = !inQuotes;
-          output += '"';
-          continue;
-        }
-
-        if (inQuotes) {
+        if (isEmoji(char)) {
           output += char;
           continue;
         }
@@ -87,22 +83,8 @@
       const input = document.getElementById('mensagem').value;
       let output = '';
       let i = 0;
-      let inQuotes = false;
 
       while (i < input.length) {
-        if (input[i] === '"') {
-          inQuotes = !inQuotes;
-          output += '"';
-          i++;
-          continue;
-        }
-
-        if (inQuotes) {
-          output += input[i];
-          i++;
-          continue;
-        }
-
         const quatro = input.substring(i, i + 4);
         const dois = input.substring(i, i + 2);
 
