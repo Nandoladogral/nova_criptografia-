@@ -46,7 +46,7 @@
       ',': '0182', '?': '0174', '+': '0815', '×': '0941', '÷': '0983',
       '=': '0127', '/': '1627', '_': '1911', '<': '1943', '>': '9144',
       '[': '0136', ']': '9781', '~': '9881', '`': '9814', '{': '1147',
-      '}': '3314', '\': '9156', '¿': '1974', '¡': '7321'
+      '}': '3314', '\\': '9156', '¿': '1974', '¡': '7321'
     };
 
     const inversoLetras = Object.fromEntries(Object.entries(letras).map(([k, v]) => [v, k]));
@@ -71,15 +71,9 @@
 
         if (char === ' ') {
           output += '#n#';
-          continue;
-        }
-
-        if (char === '\n') {
+        } else if (char === '\n') {
           output += 'p/n';
-          continue;
-        }
-
-        if (letras[char.toLowerCase()]) {
+        } else if (letras[char.toLowerCase()]) {
           output += letras[char.toLowerCase()];
         } else if (numeros[char]) {
           output += numeros[char];
@@ -99,19 +93,20 @@
       let i = 0;
 
       while (i < input.length) {
-        if (input.substring(i, i + 3) === '#n#') {
+        if (input.startsWith('#n#g%9#0', i)) {
           output += ' ';
           i += 3;
           continue;
         }
-        if (input.substring(i, i + 3) === 'p/n') {
+        if (input.startsWith('#n#9#0%4', i)) {
           output += '\n';
           i += 3;
           continue;
         }
 
-        const quatro = input.substring(i, i + 4);
-        const dois = input.substring(i, i + 2);
+        const quatro = input.slice(i, i + 4);
+        const tres = input.slice(i, i + 3);
+        const dois = input.slice(i, i + 2);
 
         if (inversoSimbolos[quatro]) {
           output += inversoSimbolos[quatro];
@@ -144,4 +139,4 @@
     }
   </script>
 </body>
-  </html>
+</html>
