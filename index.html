@@ -1,99 +1,139 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Site com Login e Painel de Admin</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Criptografia Secreta</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #0e0120, #1d0040); color: white; height: 100vh; display: flex; justify-content: center; align-items: center; }
-    .container { background: rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 40px; text-align: center; width: 100%; max-width: 400px; box-shadow: 0 0 15px #8000ff; }
-    h2 { margin-bottom: 20px; background: linear-gradient(to right, #ff00ff, #8000ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    input { width: 100%; padding: 12px; margin: 10px 0; border: none; border-radius: 10px; font-size: 16px; }
-    button { width: 100%; padding: 12px; margin-top: 10px; background: linear-gradient(135deg, #00f2ff, #00ffc8); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
-    button:hover { transform: scale(1.05); box-shadow: 0 0 15px #00fff2; }
-    .switch { font-size: 14px; color: #ccc; margin-top: 10px; }
-    .switch a { color: #00e0ff; cursor: pointer; }
-    #adminPanel { display: none; flex-direction: column; align-items: center; margin-top: 20px; }
-    textarea { width: 100%; height: 150px; border-radius: 10px; padding: 10px; background: #0d0d20; color: #fff; border: 1px solid #666; resize: none; }
+    body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+    textarea { width: 100%; height: 100px; margin-top: 10px; }
+    button { margin: 10px 5px; padding: 10px 20px; cursor: pointer; }
+    h2 { color: #333; }
+    label { font-weight: bold; }
   </style>
 </head>
 <body>
+  <h2>Criptografia Personalizada</h2>
+<label>Mensagem:</label>
 
-<div class="container" id="authContainer">
-  <h2 id="formTitle">Login</h2>
-  <input type="text" id="username" placeholder="Usuário" />
-  <input type="password" id="password" placeholder="Senha" />
-  <button onclick="handleAuth()">Entrar</button>
-  <div class="switch" id="switchMode">
-    Não tem conta? <a onclick="toggleForm()">Cadastrar</a>
-  </div>
+  <textarea id="mensagem"></textarea>  <div>
+    <button onclick="criptografar()">Criptografar</button>
+    <button onclick="descriptografar()">Descriptografar</button>
+    <button onclick="limparCampos()">Limpar</button>
+  </div><label>Resultado:</label>
 
-  <div id="adminPanel">
-    <h3>Painel de Admin</h3>
-    <p>Total de contas cadastradas: <span id="contaTotal">0</span></p>
-    <textarea id="dados" readonly></textarea>
-    <button onclick="logoutAdmin()">Sair do Painel</button>
-  </div>
-</div>
+  <textarea id="resultado" readonly></textarea><br><button onclick="copiarResultado()">Copiar resultado</button>
 
-<script src="accounts.js"></script>
-<script>
-  let isLogin = true;
+  <script>
+    const letras = {
+      'a': '@#', 'b': '$>', 'c': '$%', 'd': '<_', 'e': '!%', 'f': '*;',
+      'g': '%$', 'h': "^'", 'i': '#@', 'j': '&?', 'k': '?¿', 'l': '^_',
+      'm': '%(', 'n': '@]', 'o': '/_', 'p': '×+', 'q': '=>', 'r': '#(', 's': '(*',
+      't': '.,', 'u': '÷"', 'v': '][', 'w': ')(', 'x': '](', 'y': ']]', 'z': ':;'
+    };
 
-  // Alterna entre o formulário de login e cadastro
-  function toggleForm() {
-    isLogin = !isLogin;
-    document.getElementById("formTitle").innerText = isLogin ? "Login" : "Cadastro";
-    document.querySelector("button").innerText = isLogin ? "Entrar" : "Cadastrar";
-    document.getElementById("switchMode").innerHTML = isLogin
-      ? 'Não tem conta? <a onclick="toggleForm()">Cadastrar</a>'
-      : 'Já tem conta? <a onclick="toggleForm()">Entrar</a>';
-  }
+    const numeros = {
+      '1': 'uc', '2': 'ug', '3': 'we', '4': 'ge', '5': 'ce',
+      '6': 'va', '7': 'ha', '8': 'pw', '9': 'mo', '0': 'qp'
+    };
 
-  // Lida com login ou cadastro
-  function handleAuth() {
-    const user = document.getElementById("username").value.trim();
-    const pass = document.getElementById("password").value.trim();
+    const simbolos = {
+      '!': '1268', '@': '941', '#': '948', '$': '9148', '%': '9141',
+      '^': '9451', '&': '0862', '*': '8139', '(': '6431', ')': '1642',
+      '-': '0914', "'": '9147', '"': '0164', ':': '1964', ';': '0164',
+      ',': '0182', '?': '0174', '+': '0815', '×': '0941', '÷': '0983',
+      '=': '0127', '/': '1627', '_': '1911', '<': '1943', '>': '9144',
+      '[': '0136', ']': '9781', '~': '9881', '`': '9814', '{': '1147',
+      '}': '3314', '\\': '9156', '¿': '1974', '¡': '7321'
+    };
 
-    if (!user || !pass) return alert("Preencha todos os campos!");
+    const inversoLetras = Object.fromEntries(Object.entries(letras).map(([k, v]) => [v, k]));
+    const inversoNumeros = Object.fromEntries(Object.entries(numeros).map(([k, v]) => [v, k]));
+    const inversoSimbolos = Object.fromEntries(Object.entries(simbolos).map(([k, v]) => [v, k]));
 
-    if (isLogin) {
-      if (user === "admin" && pass === "admin123") {
-        showAdminPanel();
-      } else if (users[user] && users[user] === pass) {
-        alert("Login bem-sucedido!");
-      } else {
-        alert("Usuário ou senha incorretos.");
+    function criptografar() {
+      const input = document.getElementById('mensagem').value;
+      let output = '';
+      let inQuotes = false;
+      let buffer = '';
+
+      for (let i = 0; i < input.length; i++) {
+        const char = input[i];
+
+        if (char === '"') {
+          inQuotes = !inQuotes;
+          output += '"';
+          continue;
+        }
+
+        if (inQuotes) {
+          output += char;
+          continue;
+        }
+
+        if (letras[char.toLowerCase()]) {
+          output += letras[char.toLowerCase()];
+        } else if (numeros[char]) {
+          output += numeros[char];
+        } else if (simbolos[char]) {
+          output += simbolos[char];
+        } else {
+          output += char;
+        }
       }
-    } else {
-      if (users[user]) return alert("Esse usuário já existe!");
-      users[user] = pass;
-      saveUsers();
-      alert("Conta criada com sucesso!");
-      toggleForm();
+
+      document.getElementById('resultado').value = output;
     }
-  }
 
-  // Mostra o painel de admin com os dados de todas as contas cadastradas
-  function showAdminPanel() {
-    document.getElementById("adminPanel").style.display = "flex";
-    document.getElementById("authContainer").style.display = "none";
-    document.getElementById("contaTotal").innerText = Object.keys(users).length;
+    function descriptografar() {
+      const input = document.getElementById('mensagem').value;
+      let output = '';
+      let i = 0;
+      let inQuotes = false;
 
-    const userEntries = Object.entries(users).map(([user, pass]) => `Usuário: ${user} | Senha: ${pass}`).join("\n");
-    document.getElementById("dados").value = userEntries;
-  }
+      while (i < input.length) {
+        if (input[i] === '"') {
+          inQuotes = !inQuotes;
+          output += '"';
+          i++;
+          continue;
+        }
 
-  // Sair do painel de admin e voltar para a tela de login
-  function logoutAdmin() {
-    document.getElementById("adminPanel").style.display = "none";
-    document.getElementById("authContainer").style.display = "block";
-    document.getElementById("username").value = "";
-    document.getElementById("password").value = "";
-  }
-</script>
+        if (inQuotes) {
+          output += input[i];
+          i++;
+          continue;
+        }
 
-</body>
+        const quatro = input.substring(i, i + 4);
+        const dois = input.substring(i, i + 2);
+
+        if (inversoSimbolos[quatro]) {
+          output += inversoSimbolos[quatro];
+          i += 4;
+        } else if (inversoLetras[dois]) {
+          output += inversoLetras[dois];
+          i += 2;
+        } else if (inversoNumeros[dois]) {
+          output += inversoNumeros[dois];
+          i += 2;
+        } else {
+          output += input[i];
+          i++;
+        }
+      }
+
+      document.getElementById('resultado').value = output;
+    }
+
+    function copiarResultado() {
+      const resultado = document.getElementById('resultado');
+      resultado.select();
+      document.execCommand('copy');
+      alert('Resultado copiado!');
+    }
+
+    function limparCampos() {
+      document.getElementById('mensagem').value = '';
+      document.getElementById('resultado').value = '';
+    }
+  </script></body>
 </html>
