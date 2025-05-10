@@ -72,7 +72,7 @@
         if (char === ' ') {
           output += '#n#';
         } else if (char === '\n') {
-          output += 'n##';
+          output += 'k/p';
         } else if (letras[char.toLowerCase()]) {
           output += letras[char.toLowerCase()];
         } else if (numeros[char]) {
@@ -98,7 +98,7 @@
           i += 3;
           continue;
         }
-        if (input.startsWith('n##', i)) {
+        if (input.startsWith('k/p', i)) {
           output += '\n';
           i += 3;
           continue;
