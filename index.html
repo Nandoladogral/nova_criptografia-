@@ -1,142 +1,250 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Criptografia gdnull</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
-    textarea { width: 100%; height: 100px; margin-top: 10px; }
-    button { margin: 10px 5px; padding: 10px 20px; cursor: pointer; }
-    h2 { color: #333; }
-    label { font-weight: bold; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIVO FIBRA</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f4f4f4;
+        color: #333;
+    }
+    header {
+        background: #6c3cf5;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+    .container {
+        background: white;
+        width: 90%;
+        max-width: 600px;
+        margin: 25px auto;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    }
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+    }
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 6px 0 15px 0;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+    }
+    .btn {
+        width: 100%;
+        background: #6c3cf5;
+        color: white;
+        padding: 14px;
+        border-radius: 10px;
+        font-size: 17px;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        transition: 0.2s;
+    }
+    .btn:hover {
+        opacity: 0.85;
+    }
+    footer {
+        text-align:center;
+        padding:15px;
+        margin-top:20px;
+        color:#555;
+        font-size:14px;
+    }
+    #iosDialog {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.45);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+    #iosBox {
+        background: #fff;
+        width: 80%;
+        max-width: 300px;
+        padding: 20px;
+        border-radius: 20px;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+        animation: pop 0.25s ease;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+    #iosBox h3 {
+        margin: 0;
+        font-size: 19px;
+        font-weight: 600;
+        color: #111;
+    }
+    #iosBox p {
+        margin: 10px 0 20px;
+        font-size: 15px;
+        color: #555;
+    }
+    #iosOk {
+        width: 100%;
+        background: #007AFF;
+        color: white;
+        padding: 10px;
+        border-radius: 12px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+    }
+    @keyframes pop {
+        0% { transform: scale(0.7); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    #iosLoader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #1a002b;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        z-index: 999999;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI';
+    }
+    #barra {
+        width: 0%;
+        height: 10px;
+        background: linear-gradient(90deg,#b700ff,#6a00ff);
+        border-radius: 20px;
+    }
+
+</style>
+
+<script>
+function mostrarDialogoIOS(texto) {
+    document.getElementById("iosText").innerText = texto;
+    document.getElementById("iosDialog").style.display = "flex";
+}
+function fecharDialogo() {
+    document.getElementById("iosDialog").style.display = "none";
+}
+function iniciarCarregamentoIos(linkDestino) {
+    const loader = document.getElementById("iosLoader");
+    const barra = document.getElementById("barra");
+    const porcento = document.getElementById("porcento");
+    loader.style.display = "flex";
+    let progress = 0;
+    let intervalo = setInterval(() => {
+        progress++;
+        barra.style.width = progress + "%";
+        porcento.textContent = progress + "%";
+        if (progress >= 100) {
+            clearInterval(intervalo);
+            loader.style.display = "none";
+            window.open(linkDestino, "_blank");
+        }
+    }, 25);
+}
+function enviarWhatsApp() {
+    const nome = document.getElementById("nome").value.trim();
+    const numero = document.getElementById("numero").value.trim();
+    const plano = "Internet ilimitada por 30 dias";
+
+    if (!nome || !numero) {
+        mostrarDialogoIOS("Por favor, preencha seu nome e número antes de continuar.");
+        return;
+    }
+    const texto = `Olá me chamo ${nome} queria obter ${plano} no meu número ${numero}`;
+    const link = "https://wa.me/5569993140095?text=" + encodeURIComponent(texto);
+    iniciarCarregamentoIos(link); // <--- AQUI SOMENTE ADICIONEI
+}
+</script>
 </head>
 <body>
-  <h2>Criptografia gdnull</h2>
-  <label>Mensagem:</label>
-
-  <textarea id="mensagem"></textarea>  
-  <div>
-    <button onclick="criptografar()">Criptografar</button>
-    <button onclick="descriptografar()">Descriptografar</button>
-    <button onclick="limparCampos()">Limpar</button>
-  </div>
-
-  <label>Resultado:</label>
-  <textarea id="resultado" readonly></textarea><br>
-  <button onclick="copiarResultado()">Copiar resultado</button>
-
-  <script>
-    const letras = {
-      'a': '@#', 'b': '$>', 'c': '¡', 'd': '<_', 'e': '!%', 'f': '*;',
-      'g': '%$', 'h': "^'", 'i': '#@', 'j': '&?', 'k': '?¿', 'l': '^_',
-      'm': '%(', 'n': '@]', 'o': '%&', 'p': '×+', 'q': '=>', 'r': '#(', 's': '(*',
-      't': '.,', 'u': '÷"', 'v': '][', 'w': ')(', 'x': '](', 'y': ']]', 'z': ':;'
-    };
-
-    const numeros = {
-      '1': 'uc', '2': 'ug', '3': 'we', '4': 'ge', '5': 'ce',
-      '6': 'va', '7': 'ha', '8': 'pw', '9': 'mo', '0': 'qp'
-    };
-
-    const simbolos = {
-      '!': '1298', '@': '941', '#': '948', '$': '9148', '%': '9141',
-      '^': '9451', '&': '0862', '*': '8139', '(': '6431', ')': '1642',
-      '-': '0914', "'": '9147', '"': '7164', ':': '1964', ';': '9164',
-      ',': '0182', '?': '0174', '+': '0815', '×': '0941', '÷': '0983',
-      '=': '0127', '/': '1627', '_': '1911', '<': '1943', '>': '9144',
-      '[': '0136', ']': '9781', '~': '9881', '`': '9814', '{': '1147',
-      '}': '3314', '\\': '9156', '¿': '1974', '¡': '7321'
-    };
-
-    const inversoLetras = Object.fromEntries(Object.entries(letras).map(([k, v]) => [v, k]));
-    const inversoNumeros = Object.fromEntries(Object.entries(numeros).map(([k, v]) => [v, k]));
-    const inversoSimbolos = Object.fromEntries(Object.entries(simbolos).map(([k, v]) => [v, k]));
-
-    function isEmoji(char) {
-      return /\p{Extended_Pictographic}/u.test(char);
-    }
-
-    function criptografar() {
-      const input = document.getElementById('mensagem').value;
-      let output = '';
-
-      for (let i = 0; i < input.length; i++) {
-        const char = input[i];
-
-        if (isEmoji(char)) {
-          output += char;
-          continue;
-        }
-
-        if (char === ' ') {
-          output += '#n#';
-        } else if (char === '\n') {
-          output += 'k/p';
-        } else if (letras[char.toLowerCase()]) {
-          output += letras[char.toLowerCase()];
-        } else if (numeros[char]) {
-          output += numeros[char];
-        } else if (simbolos[char]) {
-          output += simbolos[char];
-        } else {
-          output += char;
-        }
-      }
-
-      document.getElementById('resultado').value = output;
-    }
-
-    function descriptografar() {
-      const input = document.getElementById('mensagem').value;
-      let output = '';
-      let i = 0;
-
-      while (i < input.length) {
-        if (input.startsWith('#n#', i)) {
-          output += ' ';
-          i += 3;
-          continue;
-        }
-        if (input.startsWith('k/p', i)) {
-          output += '\n';
-          i += 3;
-          continue;
-        }
-
-        const quatro = input.slice(i, i + 4);
-        const tres = input.slice(i, i + 3);
-        const dois = input.slice(i, i + 2);
-
-        if (inversoSimbolos[quatro]) {
-          output += inversoSimbolos[quatro];
-          i += 4;
-        } else if (inversoLetras[dois]) {
-          output += inversoLetras[dois];
-          i += 2;
-        } else if (inversoNumeros[dois]) {
-          output += inversoNumeros[dois];
-          i += 2;
-        } else {
-          output += input[i];
-          i++;
-        }
-      }
-
-      document.getElementById('resultado').value = output;
-    }
-
-    function copiarResultado() {
-      const resultado = document.getElementById('resultado');
-      resultado.select();
-      document.execCommand('copy');
-      alert('Resultado copiado!');
-    }
-
-    function limparCampos() {
-      document.getElementById('mensagem').value = '';
-      document.getElementById('resultado').value = '';
-    }
-  </script>
+<header style="
+    background:#6c3cf5;
+    color:white;
+    padding:20px;
+    text-align:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6S15W6M6eKq5U8ZfRmZGH3NLHOnEHfEXOZxl-NpFUbA&s=10"
+         alt="Logo Vivo"
+         style="height:60px; border-radius:10px;">
+</header>
+<div class="container">
+    <h2>PROMOÇÃO IMPERDÍVEL</h2>
+    <p>Preencha os dados abaixo para solicitar a ativação via WhatsApp.</p>
+    <label for="nome">Seu nome</label>
+    <input type="text" id="nome" placeholder="Digite seu nome">
+    <label for="numero">Seu número (DDD + número)</label>
+    <input type="text" id="numero" placeholder="Ex: 69993140095">
+    <label>Plano selecionado</label>
+    <input type="text" value="Internet ilimitada por 30 dias" disabled>
+    <button class="btn" onclick="enviarWhatsApp()">
+        Enviar formulário
+    </button>
+    <p style="font-size:12px;color:#777;margin-top:10px">
+        Você será direcionado ao WhatsApp com sua solicitação preenchida automaticamente.
+    </p>
+</div>
+<footer style="background:#f1eefc; padding:25px; text-align:center; font-size:14px; color:#4a3ca3; border-top:2px solid #d5caff;">
+    <div style="margin-bottom:18px; line-height:1.8;">
+        <strong>Viva Tudo:</strong> 5G, Ultra Banda Larga, HDTV, Voz e mais.
+    </div>
+    <div style="margin:15px 0;">
+        <a href="#" style="color:#6c3cf5; text-decoration:none; font-weight:bold;">Acessibilidade</a>
+        <div style="margin:6px auto; width:150px; height:1px; background:#d5caff;"></div>
+        <a href="#" style="color:#6c3cf5; text-decoration:none; font-weight:bold;">Privacidade</a>
+        <div style="margin:6px auto; width:150px; height:1px; background:#d5caff;"></div>
+        <a href="#" style="color:#6c3cf5; text-decoration:none; font-weight:bold;">Fale conosco</a>
+        <div style="margin:6px auto; width:150px; height:1px; background:#d5caff;"></div>
+        <a href="#" style="color:#6c3cf5; text-decoration:none; font-weight:bold;">Encontre uma Loja</a>
+    </div>
+    <div style="margin-top:20px; color:#6c3cf5;">
+        Telefônica Brasil S.A — CNPJ: 02.558.157/0001-62<br>
+        Copyright © 2025 Vivo. Todos os direitos reservados.
+    </div>
+</footer>
+<!-- 🎭 GODZIM POR AQUI KKK -->
+<div id="iosDialog">
+    <div id="iosBox">
+        <h3>Aviso</h3>
+        <p id="iosText">Mensagem aqui</p>
+        <button id="iosOk" onclick="fecharDialogo()">OK</button>
+    </div>
+</div>
+<div id="iosLoader">
+    <div style="color:white; font-size:22px; margin-bottom:20px;">
+        Carregando…
+    </div>
+    <div style="
+        width:80%;
+        height:10px;
+        background:rgba(255,255,255,0.3);
+        border-radius:20px;
+        overflow:hidden;
+    ">
+        <div id="barra"></div>
+    </div>
+    <div id="porcento" style="color:white;margin-top:10px;font-size:18px;">
+        0%
+    </div>
+</div>
 </body>
-</html>
+  </html>
