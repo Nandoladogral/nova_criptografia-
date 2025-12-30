@@ -1,212 +1,184 @@
+-- Serviços
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+local Player = Players.LocalPlayer
 
--- Criando a ScreenGui
-local ScreenGui = Instance.new("ScreenGui")
+-- Tabela de scripts
+local Scripts = {
+    {
+        name = "Infinite Yield",
+        Tipo = "all geme",
+        url = "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"
+    },
+    {
+        name = "Puxe Player",
+        Tipo = "all geme - criado por mim",
+        url = "https://pastebin.com/raw/7XSc7Vcm"
+    },
+    {
+        name = "Void ware",
+        Tipo = "99 noites na floresta",
+        url = "https://raw.githubusercontent.com/VapeVoidware/VW-Add/main/loader.lua"
+    },
+    {
+        name = "interagir no Cooldown",
+        Tipo = "all geme - criado por mim",
+        url = "https://pastebin.com/raw/qHmcqrcs"
+    },
+    {
+        name = "speed bypass",
+        Tipo = "all geme - criado por mim",
+        url = "https://pastebin.com/raw/ut3CUzRf"
+    },
+    
+}
+
+-- ScreenGui
+local ScreenGui = Instance.new("ScreenGui", Player:WaitForChild("PlayerGui"))
 ScreenGui.Name = "GODZIM_MENU"
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 ScreenGui.ResetOnSpawn = false
 
--- Criando o Frame Principal
-local MainFrame = Instance.new("Frame")
-MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0.6, 0, 1, 0) -- Aumentado o tamanho para 100% da altura da tela
-MainFrame.Position = UDim2.new(0.2, 0, 0.05, 0) -- Ajustado para que fique bem posicionado
-MainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+-- Frame principal
+local MainFrame = Instance.new("Frame", ScreenGui)
+MainFrame.Size = UDim2.new(0.6, 0, 0.85, 0)
+MainFrame.Position = UDim2.new(0.2, 0, 0.075, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(40,40,40)
 MainFrame.BorderSizePixel = 0
-MainFrame.Visible = true
-MainFrame.Parent = ScreenGui
+MainFrame.Active = true
+MainFrame.Draggable = true
+Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0.08,0)
 
--- Tornando o Frame arredondado
-local UICorner = Instance.new("UICorner")
-UICorner.CornerRadius = UDim.new(0.1, 0)
-UICorner.Parent = MainFrame
-
--- Criando o Título
-local Title = Instance.new("TextLabel")
-Title.Name = "Title"
-Title.Size = UDim2.new(1, -60, 0, 40)
+-- Título
+local Title = Instance.new("TextLabel", MainFrame)
+Title.Size = UDim2.new(1, -110, 0, 45)
 Title.Position = UDim2.new(0, 10, 0, 10)
-Title.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 Title.Text = "GODZIM MENU"
 Title.TextScaled = true
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 Title.Font = Enum.Font.GothamBold
-Title.Parent = MainFrame
+Title.TextColor3 = Color3.new(1,1,1)
+Title.BackgroundColor3 = Color3.fromRGB(30,30,30)
+Instance.new("UICorner", Title).CornerRadius = UDim.new(0.2,0)
 
--- Tornando o Título arredondado
-local TitleCorner = Instance.new("UICorner")
-TitleCorner.CornerRadius = UDim.new(0.1, 0)
-TitleCorner.Parent = Title
+-- Botão minimizar
+local Min = Instance.new("TextButton", MainFrame)
+Min.Size = UDim2.new(0,40,0,40)
+Min.Position = UDim2.new(1,-50,0,12)
+Min.Text = "-"
+Min.TextScaled = true
+Min.Font = Enum.Font.GothamBold
+Min.BackgroundColor3 = Color3.fromRGB(200,50,50)
+Min.TextColor3 = Color3.new(1,1,1)
+Instance.new("UICorner", Min).CornerRadius = UDim.new(1,0)
 
--- Criando o botão "Fling Player"
-local FlingButton = Instance.new("TextButton")
-FlingButton.Name = "FlingButton"
-FlingButton.Size = UDim2.new(0.9, 0, 0, 50)
-FlingButton.Position = UDim2.new(0.05, 0, 0.2, 0) -- Distância muito aumentada
-FlingButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-FlingButton.Text = "Fling Player"
-FlingButton.TextScaled = true
-FlingButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-FlingButton.Font = Enum.Font.Gotham
-FlingButton.Parent = MainFrame
+-- Botão lupa
+local SearchBtn = Instance.new("TextButton", MainFrame)
+SearchBtn.Size = UDim2.new(0,40,0,40)
+SearchBtn.Position = UDim2.new(1,-100,0,12)
+SearchBtn.Text = "🔍"
+SearchBtn.TextScaled = true
+SearchBtn.Font = Enum.Font.Gotham
+SearchBtn.BackgroundColor3 = Color3.fromRGB(60,60,60)
+SearchBtn.TextColor3 = Color3.new(1,1,1)
+Instance.new("UICorner", SearchBtn).CornerRadius = UDim.new(1,0)
 
--- Tornando o botão "Fling Player" arredondado
-local FlingButtonCorner = Instance.new("UICorner")
-FlingButtonCorner.CornerRadius = UDim.new(0.1, 0)
-FlingButtonCorner.Parent = FlingButton
+-- Barra de pesquisa
+local SearchBox = Instance.new("TextBox", MainFrame)
+SearchBox.Size = UDim2.new(0.9,0,0,40)
+SearchBox.Position = UDim2.new(0.05,0,0,65)
+SearchBox.PlaceholderText = "Pesquisar por nome ou tipo..."
+SearchBox.Text = ""
+SearchBox.Visible = false
+SearchBox.BackgroundColor3 = Color3.fromRGB(30,30,30)
+SearchBox.TextColor3 = Color3.new(1,1,1)
+SearchBox.Font = Enum.Font.Gotham
+SearchBox.TextSize = 16
+Instance.new("UICorner", SearchBox).CornerRadius = UDim.new(0.2,0)
 
--- Adicionando funcionalidade ao botão "Fling Player"
-FlingButton.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Auto%20Fling%20Player'))()
+-- ScrollFrame
+local Scroll = Instance.new("ScrollingFrame", MainFrame)
+Scroll.Position = UDim2.new(0,0,0,115)
+Scroll.Size = UDim2.new(1,0,1,-125)
+Scroll.CanvasSize = UDim2.new(0,0,0,0)
+Scroll.ScrollBarImageTransparency = 0.3
+Scroll.ScrollBarThickness = 8
+Scroll.BackgroundTransparency = 1
+
+local Layout = Instance.new("UIListLayout", Scroll)
+Layout.Padding = UDim.new(0,15)
+Layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+
+Layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    Scroll.CanvasSize = UDim2.new(0,0,0,Layout.AbsoluteContentSize.Y + 20)
 end)
 
--- Criando o botão "Puxe Player"
-local PuxeButton = Instance.new("TextButton")
-PuxeButton.Name = "PuxeButton"
-PuxeButton.Size = UDim2.new(0.9, 0, 0, 50)
-PuxeButton.Position = UDim2.new(0.05, 0, 0.4, 0) -- Distância muito aumentada
-PuxeButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-PuxeButton.Text = "Puxe Player"
-PuxeButton.TextScaled = true
-PuxeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-PuxeButton.Font = Enum.Font.Gotham
-PuxeButton.Parent = MainFrame
+-- Criar botões
+local Buttons = {}
 
--- Tornando o botão "Puxe Player" arredondado
-local PuxeButtonCorner = Instance.new("UICorner")
-PuxeButtonCorner.CornerRadius = UDim.new(0.1, 0)
-PuxeButtonCorner.Parent = PuxeButton
+local function CreateButtons(filter)
+    for _,b in pairs(Buttons) do b:Destroy() end
+    Buttons = {}
 
--- Adicionando funcionalidade ao botão "Puxe Player"
-PuxeButton.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet('https://pastebin.com/raw/7XSc7Vcm'))()
-end)
+    for _,info in ipairs(Scripts) do
+        if not filter
+        or info.name:lower():find(filter)
+        or info.Tipo:lower():find(filter) then
 
--- Criando o botão "Aimbot"
-local AimbotButton = Instance.new("TextButton")
-AimbotButton.Name = "AimbotButton"
-AimbotButton.Size = UDim2.new(0.9, 0, 0, 50)
-AimbotButton.Position = UDim2.new(0.05, 0, 0.6, 0) -- Distância muito aumentada
-AimbotButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-AimbotButton.Text = "Aimbot"
-AimbotButton.TextScaled = true
-AimbotButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-AimbotButton.Font = Enum.Font.Gotham
-AimbotButton.Parent = MainFrame
+            local Button = Instance.new("TextButton", Scroll)
+            Button.Size = UDim2.new(0.9,0,0,55)
+            Button.BackgroundColor3 = Color3.fromRGB(55,55,55)
+            Button.Text = info.name.."  ["..info.Tipo.."]"
+            Button.TextScaled = true
+            Button.Font = Enum.Font.Gotham
+            Button.TextColor3 = Color3.new(1,1,1)
+            Instance.new("UICorner", Button).CornerRadius = UDim.new(0.2,0)
 
--- Tornando o botão "Aimbot" arredondado
-local AimbotButtonCorner = Instance.new("UICorner")
-AimbotButtonCorner.CornerRadius = UDim.new(0.1, 0)
-AimbotButtonCorner.Parent = AimbotButton
+            Button.MouseButton1Click:Connect(function()
+                pcall(function()
+                    loadstring(game:HttpGet(info.url, true))()
+                end)
+            end)
 
--- Adicionando funcionalidade ao botão "Aimbot"
-AimbotButton.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/refs/heads/main/Arceus%20Aimbot.lua'))()
-end)
-
--- Criando o botão "Script Infinity"
-local InfinityButton = Instance.new("TextButton")
-InfinityButton.Name = "InfinityButton"
-InfinityButton.Size = UDim2.new(0.9, 0, 0, 50)
-InfinityButton.Position = UDim2.new(0.05, 0, 0.8, 0) -- Posição ajustada para maior separação
-InfinityButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-InfinityButton.Text = "Script Infinity"
-InfinityButton.TextScaled = true
-InfinityButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-InfinityButton.Font = Enum.Font.Gotham
-InfinityButton.Parent = MainFrame
-
--- Tornando o botão "Script Infinity" arredondado
-local InfinityButtonCorner = Instance.new("UICorner")
-InfinityButtonCorner.CornerRadius = UDim.new(0.1, 0)
-InfinityButtonCorner.Parent = InfinityButton
-
--- Adicionando funcionalidade ao botão "Script Infinity"
-InfinityButton.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()  -- Substitua com o link correto
-end)
-
--- Criando o botão de minimizar
-local MinimizeButton = Instance.new("TextButton")
-MinimizeButton.Name = "MinimizeButton"
-MinimizeButton.Size = UDim2.new(0, 40, 0, 40)
-MinimizeButton.Position = UDim2.new(1, -50, 0, 10)
-MinimizeButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-MinimizeButton.Text = "-"
-MinimizeButton.TextScaled = true
-MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-MinimizeButton.Font = Enum.Font.SourceSansBold
-MinimizeButton.Parent = MainFrame
-
--- Tornando o botão de minimizar arredondado
-local MinimizeButtonCorner = Instance.new("UICorner")
-MinimizeButtonCorner.CornerRadius = UDim.new(1, 0)
-MinimizeButtonCorner.Parent = MinimizeButton
-
--- Criando o botão móvel para maximizar
-local MaximizeButton = Instance.new("TextButton")
-MaximizeButton.Name = "MaximizeButton"
-MaximizeButton.Size = UDim2.new(0, 50, 0, 50)
-MaximizeButton.Position = UDim2.new(0.1, 0, 0.1, 0)
-MaximizeButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
-MaximizeButton.Text = "⚜"
-MaximizeButton.TextScaled = true
-MaximizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-MaximizeButton.Font = Enum.Font.SourceSansBold
-MaximizeButton.Visible = false
-MaximizeButton.Parent = ScreenGui
-
--- Tornando o botão de maximizar arredondado
-local MaximizeButtonCorner = Instance.new("UICorner")
-MaximizeButtonCorner.CornerRadius = UDim.new(1, 0)
-MaximizeButtonCorner.Parent = MaximizeButton
-
--- Adicionando funcionalidade de minimizar
-MinimizeButton.MouseButton1Click:Connect(function()
-    MainFrame.Visible = false
-    MaximizeButton.Visible = true
-end)
-
--- Adicionando funcionalidade de maximizar
-MaximizeButton.MouseButton1Click:Connect(function()
-    MainFrame.Visible = true
-    MaximizeButton.Visible = false
-end)
-
--- Tornando o Frame Principal Móvel
-local UIS = game:GetService("UserInputService")
-local dragging, dragInput, dragStart, startPos
-
-local function update(input)
-    local delta = input.Position - dragStart
-    MainFrame.Position = UDim2.new(
-        startPos.X.Scale,
-        startPos.X.Offset + delta.X,
-        startPos.Y.Scale,
-        startPos.Y.Offset + delta.Y
-    )
+            table.insert(Buttons, Button)
+        end
+    end
 end
 
-MainFrame.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        dragging = true
-        dragStart = input.Position
-        startPos = MainFrame.Position
-        input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then
-                dragging = false
-            end
-        end)
+CreateButtons()
+
+-- Pesquisa
+SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
+    local text = SearchBox.Text:lower()
+    if text == "" then
+        CreateButtons()
+    else
+        CreateButtons(text)
     end
 end)
 
-MainFrame.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-        dragInput = input
-    end
+SearchBtn.MouseButton1Click:Connect(function()
+    SearchBox.Visible = not SearchBox.Visible
+    SearchBox.Text = ""
+    CreateButtons()
 end)
 
-UIS.InputChanged:Connect(function(input)
-    if input == dragInput and dragging then
-        update(input)
-    end
+-- Minimizar
+local Max = Instance.new("TextButton", ScreenGui)
+Max.Size = UDim2.new(0,55,0,55)
+Max.Position = UDim2.new(0.05,0,0.2,0)
+Max.Text = "⚜"
+Max.TextScaled = true
+Max.Font = Enum.Font.GothamBold
+Max.BackgroundColor3 = Color3.fromRGB(50,200,50)
+Max.TextColor3 = Color3.new(1,1,1)
+Max.Visible = false
+Instance.new("UICorner", Max).CornerRadius = UDim.new(1,0)
+
+Min.MouseButton1Click:Connect(function()
+    MainFrame.Visible = false
+    Max.Visible = true
+end)
+
+Max.MouseButton1Click:Connect(function()
+    MainFrame.Visible = true
+    Max.Visible = false
 end)
