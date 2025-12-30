@@ -33,7 +33,7 @@ local Scripts = {
     {
         name = "puxe parts",
         Tipo = "so some geme",
-        url = "https://pastebin.com/raw/ut3CUzRf"
+        url = "https://pastebin.com/raw/FefzEQUL"
     },
 }
 
