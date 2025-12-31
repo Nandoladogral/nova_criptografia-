@@ -19,11 +19,11 @@ local Scripts = {
       Tipo = "all game - criado por mim",
       url = "https://pastebin.com/raw/qHmcqrcs"
     },
-    { name = "Desvio rápido",
+    { name = "speed pleyer (bypess)",
       Tipo = "all game - criado por mim",
       url = "https://pastebin.com/raw/ut3CUzRf"
     },
-    { name = "Puxar peças",
+    { name = "bring parts",
       Tipo = "some game",
       url = "https://pastebin.com/raw/FefzEQUL"
     },
