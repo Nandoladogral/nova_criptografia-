@@ -31,7 +31,10 @@ local Scripts = {
       Tipo = "all game",
       url = "https://rawscripts.net/raw/Universal-Script-Gui-Fly-v3-37111"
     },
-    
+    { name = "aimbot (mobile/pc)",
+      Tipo = "all game",
+      url = "https://pastebin.com/raw/B0SBjPgH"
+    },
 }
 
 
