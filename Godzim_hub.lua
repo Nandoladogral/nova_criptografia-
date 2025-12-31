@@ -27,6 +27,10 @@ local Scripts = {
       Tipo = "some game",
       url = "https://pastebin.com/raw/FefzEQUL"
     },
+    { name = "fly gui v3",
+      Tipo = "all game",
+      url = "https://rawscripts.net/raw/Universal-Script-Gui-Fly-v3-37111"
+    },
     
 }
 
