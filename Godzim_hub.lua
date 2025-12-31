@@ -130,7 +130,7 @@ local function CreateButtons(filter)
             local Button = Instance.new("TextButton", Scroll)
             Button.Size = UDim2.new(0.9,0,0,55)
             Button.BackgroundColor3 = Color3.fromRGB(55,55,55)
-            Button.Text = info.name.."  ["..info.Tipo.."]"
+            Button.Text = info.name.."   < "..info.Tipo.." >"
             Button.TextScaled = true
             Button.Font = Enum.Font.Gotham
             Button.TextColor3 = Color3.new(1,1,1)
