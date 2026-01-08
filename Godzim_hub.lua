@@ -34,7 +34,7 @@ local Scripts = {
     { name = "aimbot (mobile/pc)",
       Tipo = "all game",
       url = "https://pastebin.com/raw/B0SBjPgH"
-    },
+    }
 }
 
 
